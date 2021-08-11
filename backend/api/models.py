@@ -19,6 +19,10 @@ class Tag(models.Model):
         verbose_name='Slug'
     )
 
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
     def __str__(self):
         return self.name
 
@@ -40,6 +44,10 @@ class Ingredient(models.Model):
         verbose_name='Единица измерения'
     )
 
+    class Meta:
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
+
     def __str__(self):
         return self.name
 
@@ -59,8 +67,14 @@ class Follow(models.Model):
     )
 
     class Meta:
-        constraints = [models.UniqueConstraint(
-            fields=['user', 'author'], name='unique_follow')]
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'author'],
+                name='unique_follow'
+            )
+        ]
 
 
 class Recipe(models.Model):
@@ -103,6 +117,10 @@ class Recipe(models.Model):
         verbose_name='Время приготовления'
     )
 
+    class Meta:
+        verbose_name = 'Рецепт'
+        verbose_name_plural = 'Рецепты'
+
     def __str__(self):
         return self.name
 
@@ -122,6 +140,10 @@ class IngredientInRecipe(models.Model):
         null=True,
         verbose_name='Количество ингредиентов'
     )
+
+    class Meta:
+        verbose_name = 'Количество ингредиентов в рецепте'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return f'{self.ingredient} in {self.recipe}'
@@ -145,6 +167,16 @@ class ShoppingList(models.Model):
         verbose_name='Дата добавления'
     )
 
+    class Meta:
+        verbose_name = 'Список покупок'
+        verbose_name_plural = 'Списки покупок'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique_shopping_list'
+            )
+        ]
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(
@@ -163,3 +195,13 @@ class Favorite(models.Model):
         auto_now_add=True,
         verbose_name='Дата добавления'
     )
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = verbose_name
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique_favorite'
+            )
+        ]

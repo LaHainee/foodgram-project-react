@@ -1,5 +1,6 @@
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
+from django.shortcuts import get_object_or_404
 
 from users.serializers import UserSerializer as BaseUserSerializer
 
@@ -138,12 +139,10 @@ class ShowFollowersSerializer(serializers.ModelSerializer):
         other_user = user.following.all()
         if user.is_anonymous or other_user.count() == 0:
             return False
-        if Follow.objects.filter(user=user, author=current_user).exists():
-            return True
-        return False
+        return Follow.objects.filter(user=user, author=current_user).exists()
 
     def count_recipes(self, user):
-        return len(user.recipes.all())
+        return user.recipes.all().count()
 
 
 class ShowIngredientsSerializer(serializers.ModelSerializer):
@@ -158,7 +157,7 @@ class AddIngredientToRecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ('id', 'amount')
+        fields = ('id', 'amount', )
 
 
 class ShowRecipeSerializer(serializers.ModelSerializer):
@@ -220,7 +219,7 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
         recipe.save()
         recipe.tags.set(tags_data)
         for ingredient in ingredients_data:
-            ingredient_model = Ingredient.objects.get(id=ingredient['id'])
+            ingredient_model = get_object_or_404(Ingredient, id=ingredient['id'])
             amount = ingredient['amount']
             IngredientInRecipe.objects.create(
                 ingredient=ingredient_model,
@@ -240,7 +239,7 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
         IngredientInRecipe.objects.filter(recipe=instance).delete()
         for new_ingredient in ingredient_data:
             IngredientInRecipe.objects.create(
-                ingredient=Ingredient.objects.get(id=new_ingredient['id']),
+                ingredient=get_object_or_404(Ingredient, id=new_ingredient['id']),
                 recipe=instance,
                 amount=new_ingredient['amount']
             )
