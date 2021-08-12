@@ -85,6 +85,7 @@ class FollowViewSet(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id):
@@ -115,6 +116,7 @@ class FavouriteViewSet(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+        serializer.save()
         return Response(
             serializer.data,
             status=status.HTTP_201_CREATED
@@ -156,6 +158,7 @@ class ShoppingListViewSet(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+        serializer.save()
         return Response(
             serializer.data,
             status=status.HTTP_201_CREATED)

@@ -37,6 +37,7 @@ class AddFavouriteRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'image', 'cooking_time')
+        
 
 
 class RecipeIngredientsSerializer(serializers.ModelSerializer):
