@@ -6,6 +6,15 @@ from api.models import Follow
 from .models import CustomUser
 
 
+class CustomUserCreateSerializer(UserCreateSerializer):
+
+    class Meta(UserCreateSerializer.Meta):
+        model = CustomUser
+        fields = (
+            'id', 'email', 'username', 'password', 'first_name', 'last_name'
+        )
+
+
 class UserSerializer(serializers.ModelSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
@@ -19,11 +28,3 @@ class UserSerializer(serializers.ModelSerializer):
         if request is None or request.user.is_anonymous:
             return False
         return Follow.objects.filter(user=request.user, author=obj).exists()
-
-
-class CustomUserCreateSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
-        model = CustomUser
-        fields = (
-            'id', 'email', 'username', 'password', 'first_name', 'last_name'
-        )
