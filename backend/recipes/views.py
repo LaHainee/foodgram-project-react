@@ -88,12 +88,12 @@ class FavoriteViewSet(APIView):
         )
 
     def delete(self, request, recipe_id):
-        user = request.user
-        recipe = get_object_or_404(Recipe, id=recipe_id)
-
-        Favorite.objects.get(
-            user=user,
-            recipe=recipe).delete()
+        obj = get_object_or_404(
+            Favorite,
+            user=request.user,
+            recipe__id=recipe_id
+        )
+        obj.delete()
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )
@@ -118,10 +118,12 @@ class ShoppingCartViewSet(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, recipe_id):
-        user = request.user
-        recipe = get_object_or_404(Recipe, id=recipe_id)
-
-        ShoppingCart.objects.get(user=user, recipe=recipe).delete()
+        obj = get_object_or_404(
+            ShoppingCart,
+            user=request.user,
+            recipe__id=recipe_id
+        )
+        obj.delete()
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )
@@ -192,11 +194,12 @@ class FollowViewSet(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, author_id):
-        user = request.user
-        author = get_object_or_404(User, id=author_id)
-        obj = get_object_or_404(Follow, user=user, author=author)
+        obj = get_object_or_404(
+            Follow,
+            user=request.user,
+            author__id=author_id
+        )
         obj.delete()
-
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )

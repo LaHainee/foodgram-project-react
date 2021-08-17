@@ -244,7 +244,9 @@ class FavoriteSerializer(serializers.ModelSerializer):
                 and not Favorite.objects.filter(
                     user=user,
                     recipe=recipe).exists()):
-            raise serializers.ValidationError()
+            raise serializers.ValidationError(
+                'Рецепт не добавлен в избранное'
+            )
 
         return data
 
@@ -277,7 +279,9 @@ class ShoppingCartSerializer(FavoriteSerializer):
                 and not ShoppingCart.objects.filter(
                     user=user,
                     recipe=recipe).exists()):
-            raise serializers.ValidationError()
+            raise serializers.ValidationError(
+                'Продукты не добавлены в корзину'
+            )
 
         return data
 
