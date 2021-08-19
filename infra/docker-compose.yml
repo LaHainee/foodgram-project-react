@@ -10,10 +10,10 @@ services:
       - ./.env
 
   backend:
-#    image: vershovbmstu/infra_backend
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: vershovbmstu/infra_backend
+#    build:
+#      context: ../backend
+#      dockerfile: Dockerfile
     restart: always
     depends_on:
       - db
@@ -24,10 +24,10 @@ services:
       - ./.env
 
   frontend:
-#    image: vershovbmstu/infra_frontend
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: vershovbmstu/infra_frontend
+#    build:
+#      context: ../frontend
+#      dockerfile: Dockerfile
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
