@@ -52,5 +52,6 @@ services:
 
 volumes:
   postgres_data:
+  result_build:
   static_value:
   media_value:
