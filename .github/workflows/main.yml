@@ -37,10 +37,12 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          stack_file_name: docker-compose.yaml
+          stack_file_name: docker-compose.yml
           script: |
-            sudo docker-compose pull vershovbmstu/foodgram-project-react:latest
-            sudo docker-compose down
+            sudo docker pull vershovbmstu/foodgram-project-react:latest
+            sudo docker pull vershovbmstu/infra_frontend
+            sudo docker-compose stop
+            sudo docker-compose rm backend
             touch .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
             echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
