@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: postgres:12.4
+    image: arm64v8/postgres:12.6
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: always
