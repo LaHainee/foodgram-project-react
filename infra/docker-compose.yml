@@ -2,8 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: postgres:13.2
-    container_name: postgresql
+    image: postgres:12.4
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: always
