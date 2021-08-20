@@ -10,10 +10,7 @@ services:
       - ./.env
 
   backend:
-          #    image: vershovbmstu/infra_backend
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: vershovbmstu/infra_backend
     restart: always
     depends_on:
       - db
@@ -24,10 +21,7 @@ services:
       - ./.env
 
   frontend:
-          #    image: vershovbmstu/infra_frontend
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: vershovbmstu/infra_frontend
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
@@ -52,6 +46,5 @@ services:
 
 volumes:
   postgres_data:
-  result_build:
   static_value:
   media_value:
