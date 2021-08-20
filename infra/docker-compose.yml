@@ -10,18 +10,18 @@ services:
       - ./.env
 
   backend:
-    image: vershovbmstu/infra_backend
+    image: vershovbmstu/foodgram_backend
     restart: always
-    depends_on:
-      - db
     volumes:
       - static_value:/code/dj_static/
       - media_value:/code/dj_media/
+    depends_on:
+      - db    
     env_file:
       - ./.env
 
   frontend:
-    image: vershovbmstu/infra_frontend
+    image: vershovbmstu/foodgram_frontend
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
