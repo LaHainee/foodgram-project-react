@@ -27,5 +27,7 @@
   sudo docker-compose exec backend python manage.py collectstatic --noinput
   sudo docker-compose exec backend python manage.py createsuperuser
   ```
-
+## Учетные данные от админки
+* Логин: admin@gmail.com
+* Пароль: admin
 
