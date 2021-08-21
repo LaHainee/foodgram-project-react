@@ -26,6 +26,9 @@
   sudo docker-compose exec backend python manage.py migrate --noinput
   sudo docker-compose exec backend python manage.py collectstatic --noinput
   sudo docker-compose exec backend python manage.py createsuperuser
-  ```
-
-
+  ```  
+## Сайт
+http://178.154.241.194/
+## Учетные данные от админки
+* Логин: admin@gmail.com
+* Пароль: admin
