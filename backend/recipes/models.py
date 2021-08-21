@@ -8,6 +8,7 @@ User = get_user_model()
 class Ingredient(models.Model):
     name = models.CharField(
         max_length=200,
+        unique=True,
         verbose_name='Название ингредиента'
     )
     measurement_unit = models.CharField(
@@ -27,6 +28,7 @@ class Ingredient(models.Model):
 class Tag(models.Model):
     name = models.CharField(
         max_length=20,
+        unique=True,
         verbose_name='Название тега'
     )
     color = models.CharField(
@@ -112,6 +114,12 @@ class RecipeIngredient(models.Model):
     class Meta:
         verbose_name = 'Ингредиенты'
         verbose_name_plural = verbose_name
+        constraints = [
+            models.UniqueConstraint(
+                fields=['recipe', 'ingredient'],
+                name='unique_ingredient_item'
+            )
+        ]
 
 
 class ReceiptTag(models.Model):

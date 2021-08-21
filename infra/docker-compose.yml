@@ -10,7 +10,10 @@ services:
       - ./.env
 
   backend:
-    image: vershovbmstu/foodgram_backend
+#    image: vershovbmstu/foodgram_backend
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - static_value:/code/dj_static/
@@ -21,7 +24,10 @@ services:
       - ./.env
 
   frontend:
-    image: vershovbmstu/foodgram_frontend
+#    image: vershovbmstu/foodgram_frontend
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
