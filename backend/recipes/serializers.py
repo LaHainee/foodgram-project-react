@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
+from django.db import IntegrityError
 
 from users.serializers import UserDetailSerializer
 from .fields import Base64ImageField
@@ -151,6 +152,18 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         ingredients = self.initial_data.get('ingredients')
+        hash_val = dict()
+        for item in ingredients:
+            if item['id'] in hash_val:
+                raise serializers.ValidationError(
+                    {
+                        'error': (
+                            'В рецепте присутствуют повторяющиеся ингредиенты'
+                        )
+                    }
+                )
+            else:
+                hash_val[item['id']] = 1
         for item in ingredients:
             if int(item['amount']) <= 0:
                 raise serializers.ValidationError(
